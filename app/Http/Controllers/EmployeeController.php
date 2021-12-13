@@ -7,6 +7,7 @@ use App\Http\Requests\EmployeeSUpdateRequest;
 use App\Mail\EmployeeCreated;
 use App\Models\Designation;
 use App\Models\Employee;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
@@ -40,18 +41,17 @@ class EmployeeController extends Controller
         $employee->save();
 
         //sent mail to employee
-//        Mail::to($request->email)->send(new EmployeeCreated($employee->name));
+        Mail::to($request->email)->send(new EmployeeCreated($employee->name));
 
         return redirect()->route('employee.index');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $employees = DB::table(Employee::getTableName().' as e')
             ->join(Designation::getTableName().' as d', 'd.id', 'e.designation_id')
             ->select('e.id', 'e.name', 'e.email', 'e.photo', 'd.designation')
             ->get();
-
         return view('employee.index', compact('employees'));
     }
     public function edit(Employee $employee)
@@ -82,7 +82,6 @@ class EmployeeController extends Controller
 
     public function destroy(Employee $employee)
     {
-        Employee::where('id', $employee->id)->firstOrFail();
         $employee->delete();
         return redirect()->route('employee.index');
     }

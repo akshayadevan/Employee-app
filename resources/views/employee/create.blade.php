@@ -35,13 +35,16 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Designation<span class="text-danger">*</span></label>
-                                <select name="designation_id" class="form-control" required>
+                                <select name="designation_id" class="form-control">
                                     @if(count($designations) > 0)
                                         @foreach($designations as $designation)
                                             <option value="{{ $designation->id }}">{{ $designation->designation }}</option>
                                         @endforeach
                                     @endif
                                 </select>
+                                @error('designation_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Photo</label>
