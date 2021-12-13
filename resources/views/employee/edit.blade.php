@@ -36,8 +36,8 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Designation<span class="text-danger">*</span></label>
                                 <select name="designation_id" class="form-control" required>
-                                        @foreach($designations as $key => $designation)
-                                        <option value="{{ $key }}" {{ in_array($key, $designations)?'selected':''  }}>{{ ucfirst($designation)}}</option>
+                                        @foreach($designations as $designation)
+                                        <option value="{{ $designation->id }}" {{($employee->designation_id == $designation->id)?'selected':''  }}>{{ ucfirst($designation->designation)}}</option>
                                     @endforeach
                                 </select>
                             </div>

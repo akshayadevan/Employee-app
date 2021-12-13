@@ -49,14 +49,14 @@ class EmployeeController extends Controller
     {
         $employees = DB::table(Employee::getTableName().' as e')
             ->join(Designation::getTableName().' as d', 'd.id', 'e.designation_id')
-            ->select('e.id', 'e.name', 'e.email', 'd.designation')
+            ->select('e.id', 'e.name', 'e.email', 'e.photo', 'd.designation')
             ->get();
 
         return view('employee.index', compact('employees'));
     }
     public function edit(Employee $employee)
     {
-        $designations = Designation::pluck('designation', 'id')->toArray();
+        $designations = Designation::get();
         return view('employee.edit', compact('employee', 'designations'));
     }
 
